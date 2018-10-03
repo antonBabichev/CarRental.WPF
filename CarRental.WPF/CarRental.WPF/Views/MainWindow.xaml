@@ -1,0 +1,72 @@
+﻿<Window x:Class="CarRental.WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CarRental.WPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <DockPanel Name="dockPnl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="Auto">
+        <Grid DockPanel.Dock="Top" Margin="5,5,5,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0">Pickup Location:</Label>
+            <TextBox Name="pickupTxt" Grid.Column="1" Grid.Row="0" Margin="5,2,5,2" Text="{Binding ProposedViewModel.PickupLocation}"></TextBox>
+            <Label Grid.Column="2" Grid.Row="0">Dropoff Location:</Label>
+            <TextBox Name="dropoffTxt" Grid.Column="3" Grid.Row="0" Margin="5,1,5,1" Text="{Binding ProposedViewModel.DropoffLocation}"></TextBox>
+            <Label Grid.Column="0" Grid.Row="1">From:</Label>
+            <DatePicker Name="fromDt" Grid.Column="1" Grid.Row="1" Margin="5" SelectedDate="{Binding ProposedViewModel.PickupDay}"></DatePicker>
+            <Label Grid.Column="2" Grid.Row="1">Pickup time:</Label>
+            <TextBox Name="pickupTimeTxt" Grid.Column="3" Grid.Row="1" Margin="5"></TextBox>
+            <Label Grid.Column="0" Grid.Row="2">To:</Label>
+            <DatePicker Name="toDt" Grid.Column="1" Grid.Row="2" Margin="5" SelectedDate="{Binding ProposedViewModel.DropoffDay}"></DatePicker>
+            <Label Grid.Column="2" Grid.Row="2">Return time:</Label>
+            <TextBox Name="returnTimeTxt" Grid.Column="3" Grid.Row="2" Margin="5"></TextBox>
+            <Button Grid.Column="3" Grid.Row="3" Command="{Binding SeeRatesCommand}" Margin="5">See rates</Button>
+        </Grid>
+        <DataGrid ItemsSource="{Binding Cars}" SelectedItem="{Binding SelectedCar}" CanUserAddRows="False" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="SizeToCells" IsReadOnly="True" Header="Car type">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Class}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="SizeToCells" IsReadOnly="True" Header="Details">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Description}" IsReadOnly="True"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="Auto"  IsReadOnly="True" Header="Price">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding HourlyRate}" IsReadOnly="True"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="SizeToCells" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                            <Button Command="{Binding Path=DataContext.BookCommand,   
+                                               RelativeSource={RelativeSource AncestorType=Window},  
+                                               Mode=Default}">Book</Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+    </DockPanel>
+</Window>
